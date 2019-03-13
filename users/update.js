@@ -9,12 +9,12 @@ module.exports.update = (event, context, callback) => {
   const data = JSON.parse(event.body);
 
   // validation
-  if (typeof data.text !== 'string' || typeof data.checked !== 'boolean') {
+  if (typeof data.firstName !== 'string' || typeof data.lastName !== 'string' || typeof data.active !== 'boolean') {
     console.error('Validation Failed');
     callback(null, {
       statusCode: 400,
       headers: { 'Content-Type': 'text/plain' },
-      body: 'Couldn\'t update the todo item.',
+      body: 'Couldn\'t update the user.',
     });
     return;
   }
@@ -22,17 +22,20 @@ module.exports.update = (event, context, callback) => {
   const params = {
     TableName: process.env.USERS_DYNAMODB_TABLE,
     Key: {
-      id: event.pathParameters.id,
+      userId: event.pathParameters.id,
     },
     ExpressionAttributeNames: {
-      '#todo_text': 'text',
+      '#user_firstName': 'firstName',
+      '#user_lastName': 'lastName',
     },
     ExpressionAttributeValues: {
-      ':text': data.text,
-      ':checked': data.checked,
+      ':userName': data.userName,
+      ':firstName': data.firstName,
+      ':lastName': data.lastName,
+      ':active': data.active,
       ':updatedAt': timestamp,
     },
-    UpdateExpression: 'SET #todo_text = :text, checked = :checked, updatedAt = :updatedAt',
+    UpdateExpression: 'SET #user_firstName = :firstName,#user_lastName = :lastName, active = :active, updatedAt = :updatedAt',
     ReturnValues: 'ALL_NEW',
   };
 
@@ -44,7 +47,7 @@ module.exports.update = (event, context, callback) => {
       callback(null, {
         statusCode: error.statusCode || 501,
         headers: { 'Content-Type': 'text/plain' },
-        body: 'Couldn\'t fetch the todo item.',
+        body: 'Couldn\'t fetch the user.',
       });
       return;
     }
