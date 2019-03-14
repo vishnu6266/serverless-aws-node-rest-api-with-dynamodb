@@ -270,7 +270,7 @@ resources:
   Resources:
     UsersDynamoDbTable:
       Type: 'AWS::DynamoDB::Table'
-      DeletionPolicy: Retain
+      DeletionPolicy: Delete
       Properties:
         AttributeDefinitions:
           -
@@ -284,9 +284,9 @@ resources:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
         TableName: ${self:provider.environment.USERS_DYNAMODB_TABLE}
-  PagesDynamoDbTable:
+    PagesDynamoDbTable:
       Type: 'AWS::DynamoDB::Table'
-      DeletionPolicy: Retain
+      DeletionPolicy: Delete
       Properties:
         AttributeDefinitions:
           -
@@ -300,9 +300,9 @@ resources:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
         TableName: ${self:provider.environment.PAGES_DYNAMODB_TABLE}
-  AnnotationDynamoDbTable:
+    AnnotationDynamoDbTable:
       Type: 'AWS::DynamoDB::Table'
-      DeletionPolicy: Retain
+      DeletionPolicy: Delete
       Properties:
         AttributeDefinitions:
           -
@@ -317,14 +317,14 @@ resources:
             KeyType: HASH
           -
             AttributeName: pageId
-            KeyType: HASH
+            KeyType: RANGE
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
         TableName: ${self:provider.environment.ANNOTATIONS_DYNAMODB_TABLE}
-  QuestionsDynamoDbTable:
+    QuestionsDynamoDbTable:
       Type: 'AWS::DynamoDB::Table'
-      DeletionPolicy: Retain
+      DeletionPolicy: Delete
       Properties:
         AttributeDefinitions:
           -
@@ -339,14 +339,14 @@ resources:
             KeyType: HASH
           -
             AttributeName: annotationId
-            KeyType: HASH
+            KeyType: RANGE
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
         TableName: ${self:provider.environment.QUESTIONS_DYNAMODB_TABLE}
-  AnswersDynamoDbTable:
+    AnswersDynamoDbTable:
       Type: 'AWS::DynamoDB::Table'
-      DeletionPolicy: Retain
+      DeletionPolicy: Delete
       Properties:
         AttributeDefinitions:
           -
@@ -361,14 +361,14 @@ resources:
             KeyType: HASH
           -
             AttributeName: questionId
-            KeyType: HASH
+            KeyType: RANGE
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
         TableName: ${self:provider.environment.ANSWERS_DYNAMODB_TABLE} 
-  CommentsDynamoDbTable:
+    CommentsDynamoDbTable:
       Type: 'AWS::DynamoDB::Table'
-      DeletionPolicy: Retain
+      DeletionPolicy: Delete
       Properties:
         AttributeDefinitions:
           -
@@ -383,7 +383,7 @@ resources:
             KeyType: HASH
           -
             AttributeName: answerId
-            KeyType: HASH
+            KeyType: RANGE
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1

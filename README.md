@@ -38,6 +38,100 @@ In order to deploy the endpoint simply run
 serverless deploy
 ```
 
+Similar result is expected.
+
+```bash
+Serverless: Packaging service...
+Serverless: Excluding development dependencies...
+Serverless: Creating Stack...
+Serverless: Checking Stack create progress...
+.....
+Serverless: Stack create finished...
+Serverless: Uploading CloudFormation file to S3...
+Serverless: Uploading artifacts...
+Serverless: Uploading service HMCF-WebAnno.zip file to S3 (22.77 KB)...
+Serverless: Validating template...
+Serverless: Updating Stack...
+Serverless: Checking Stack update progress...
+........................................................................................................................................................................................................................................................................................................................................................................................................................................................................................
+Serverless: Stack update finished...
+Service Information
+service: HMCF-WebAnno
+stage: dev
+region: us-east-1
+stack: HMCF-WebAnno-dev
+resources: 100
+api keys:
+  None
+endpoints:
+  POST - https://xxxxxxxxxx.execute-api.us-east-1.amazonaws.com/dev/users
+  GET - https://xxxxxxxxxx.execute-api.us-east-1.amazonaws.com/dev/users
+  GET - https://xxxxxxxxxx.execute-api.us-east-1.amazonaws.com/dev/users/{id}
+  PUT - https://xxxxxxxxxx.execute-api.us-east-1.amazonaws.com/dev/users/{id}
+  DELETE - https://xxxxxxxxxx.execute-api.us-east-1.amazonaws.com/dev/users/{id}
+  POST - https://xxxxxxxxxx.execute-api.us-east-1.amazonaws.com/dev/pages
+  GET - https://xxxxxxxxxx.execute-api.us-east-1.amazonaws.com/dev/pages
+  GET - https://xxxxxxxxxx.execute-api.us-east-1.amazonaws.com/dev/pages/{id}
+  PUT - https://xxxxxxxxxx.execute-api.us-east-1.amazonaws.com/dev/pages/{id}
+  DELETE - https://xxxxxxxxxx.execute-api.us-east-1.amazonaws.com/dev/pages/{id}
+  POST - https://xxxxxxxxxx.execute-api.us-east-1.amazonaws.com/dev/annotations
+  GET - https://xxxxxxxxxx.execute-api.us-east-1.amazonaws.com/dev/annotations
+  GET - https://xxxxxxxxxx.execute-api.us-east-1.amazonaws.com/dev/annotations/{id}
+  PUT - https://xxxxxxxxxx.execute-api.us-east-1.amazonaws.com/dev/annotations/{id}
+  DELETE - https://xxxxxxxxxx.execute-api.us-east-1.amazonaws.com/dev/annotations/{id}
+  POST - https://xxxxxxxxxx.execute-api.us-east-1.amazonaws.com/dev/questions
+  GET - https://xxxxxxxxxx.execute-api.us-east-1.amazonaws.com/dev/questions
+  GET - https://xxxxxxxxxx.execute-api.us-east-1.amazonaws.com/dev/questions/{id}
+  PUT - https://xxxxxxxxxx.execute-api.us-east-1.amazonaws.com/dev/questions/{id}
+  DELETE - https://xxxxxxxxxx.execute-api.us-east-1.amazonaws.com/dev/questions/{id}
+  POST - https://xxxxxxxxxx.execute-api.us-east-1.amazonaws.com/dev/answers
+  GET - https://xxxxxxxxxx.execute-api.us-east-1.amazonaws.com/dev/answers
+  GET - https://xxxxxxxxxx.execute-api.us-east-1.amazonaws.com/dev/answers/{id}
+  PUT - https://xxxxxxxxxx.execute-api.us-east-1.amazonaws.com/dev/answers/{id}
+  DELETE - https://xxxxxxxxxx.execute-api.us-east-1.amazonaws.com/dev/answers/{id}
+  POST - https://xxxxxxxxxx.execute-api.us-east-1.amazonaws.com/dev/comments
+  GET - https://xxxxxxxxxx.execute-api.us-east-1.amazonaws.com/dev/comments
+  GET - https://xxxxxxxxxx.execute-api.us-east-1.amazonaws.com/dev/comments/{id}
+  PUT - https://xxxxxxxxxx.execute-api.us-east-1.amazonaws.com/dev/comments/{id}
+  DELETE - https://xxxxxxxxxx.execute-api.us-east-1.amazonaws.com/dev/comments/{id}
+functions:
+  createUser: HMCF-WebAnno-dev-createUser
+  listUser: HMCF-WebAnno-dev-listUser
+  getUser: HMCF-WebAnno-dev-getUser
+  updateUser: HMCF-WebAnno-dev-updateUser
+  deleteUser: HMCF-WebAnno-dev-deleteUser
+  createPage: HMCF-WebAnno-dev-createPage
+  listPage: HMCF-WebAnno-dev-listPage
+  getPage: HMCF-WebAnno-dev-getPage
+  updatePage: HMCF-WebAnno-dev-updatePage
+  deletePage: HMCF-WebAnno-dev-deletePage
+  createAnnotation: HMCF-WebAnno-dev-createAnnotation
+  listAnnotation: HMCF-WebAnno-dev-listAnnotation
+  getAnnotation: HMCF-WebAnno-dev-getAnnotation
+  updateAnnotation: HMCF-WebAnno-dev-updateAnnotation
+  deleteAnnotation: HMCF-WebAnno-dev-deleteAnnotation
+  createQuestion: HMCF-WebAnno-dev-createQuestion
+  listQuestion: HMCF-WebAnno-dev-listQuestion
+  getQuestion: HMCF-WebAnno-dev-getQuestion
+  updateQuestion: HMCF-WebAnno-dev-updateQuestion
+  deleteQuestion: HMCF-WebAnno-dev-deleteQuestion
+  createAnswer: HMCF-WebAnno-dev-createAnswer
+  listAnswer: HMCF-WebAnno-dev-listAnswer
+  getAnswer: HMCF-WebAnno-dev-getAnswer
+  updateAnswer: HMCF-WebAnno-dev-updateAnswer
+  deleteAnswer: HMCF-WebAnno-dev-deleteAnswer
+  createComment: HMCF-WebAnno-dev-createComment
+  listComment: HMCF-WebAnno-dev-listComment
+  getComment: HMCF-WebAnno-dev-getComment
+  updateComment: HMCF-WebAnno-dev-updateComment
+  deleteComment: HMCF-WebAnno-dev-deleteComment
+layers:
+  None
+
+
+```
+
+
 ## Usage
 
 You can create, retrieve, update, or delete todos with the following commands:
