@@ -9,7 +9,7 @@ module.exports.update = (event, context, callback) => {
   const data = JSON.parse(event.body);
 
   // validation
-  if (typeof data.questionText !== 'string') {
+  if (typeof data.annotationId !== 'string' || typeof data.questionText !== 'string') {
     console.error('Validation Failed');
     callback(null, {
       statusCode: 400,
@@ -23,6 +23,7 @@ module.exports.update = (event, context, callback) => {
     TableName: process.env.QUESTIONS_DYNAMODB_TABLE,
     Key: {
       questionId: event.pathParameters.id,
+      annotationId: data.annotationId,
     },
     ExpressionAttributeNames: {
       '#q_questionText': 'questionText',

@@ -262,14 +262,13 @@ Example Result:
 ```
 ### Vote a question 
 
-If liked
 
-curl -X PUT https://XXXXXXXXXX.execute-api.us-east-1.amazonaws.com/dev/questions/<id>/true
+curl -X PUT https://XXXXXXXXXX.execute-api.us-east-1.amazonaws.com/dev/questions/<id>/vote --data '{"annotationId":"5e89d040-460d-11e9-9d9a-f7ecfc95429c","liked":true or false}'
 
-If disliked
-
-curl -X PUT https://XXXXXXXXXX.execute-api.us-east-1.amazonaws.com/dev/questions/<id>/false
-
+Example Result:
+```bash
+{"upVoteCount":1,"downVoteCount":0,"questionText":"What is this section about?","questionId":"61ca02f0-4614-11e9-88a4-dfe4685122e8","updatedAt":1552546523279,"createdAt":1552538896543,"createdBy":"john.doe","annotationId":"5e89d040-460d-11e9-9d9a-f7ecfc95429c"}
+```
 
 #### List all quesions on an annotation
 
@@ -295,15 +294,12 @@ Example Result:
 ```
 ### Vote a answer 
 
-If liked
+curl -X PUT https://XXXXXXXXXX.execute-api.us-east-1.amazonaws.com/dev/answers/644c7900-461d-11e9-aa4d-7d2ab4d5a091/vote --data '{"questionId":"61ca02f0-4614-11e9-88a4-dfe4685122e8","liked":false}'
 
-curl -X PUT https://XXXXXXXXXX.execute-api.us-east-1.amazonaws.com/dev/answers/<id>/true
-
-If Disliked
-
-curl -X PUT https://XXXXXXXXXX.execute-api.us-east-1.amazonaws.com/dev/answers/<id>/false
-
-
+Example Result:
+```bash
+{"upVoteCount":0,"downVoteCount":1,"questionId":"61ca02f0-4614-11e9-88a4-dfe4685122e8","updatedAt":1552546956408,"answerId":"644c7900-461d-11e9-aa4d-7d2ab4d5a091","answerText":"This is my answer","createdAt":1552542766224,"createdBy":"john.doe"}
+```
 #### List all answers for a question
 
 ```bash

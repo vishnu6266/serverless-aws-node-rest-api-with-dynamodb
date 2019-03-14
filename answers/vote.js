@@ -9,7 +9,7 @@ module.exports.update = (event, context, callback) => {
   const data = JSON.parse(event.body);
 
   // validation
-  if (typeof event.pathParameters.like !== 'string') {
+ if (typeof data.questionId !== 'string' || typeof data.liked !== 'boolean') {
     console.error('Validation Failed');
     callback(null, {
       statusCode: 400,
@@ -22,7 +22,7 @@ module.exports.update = (event, context, callback) => {
   let upVoteIncrement = 0;
   let downVoteIncrement = 0;
     
-  if (event.pathParameters.like) {
+  if (data.liked) {
     upVoteIncrement = 1;
   } else {
     downVoteIncrement = 1;
@@ -31,11 +31,13 @@ module.exports.update = (event, context, callback) => {
   const params = {
     TableName: process.env.ANSWERS_DYNAMODB_TABLE,
     Key: {
-      questionId: event.pathParameters.id,
+      answerId: event.pathParameters.id,
+      questionId: data.questionId,
     },
     ExpressionAttributeValues: {
       ':upVoteIncrement': upVoteIncrement,
       ':downVoteIncrement': downVoteIncrement,
+      ':updatedAt': timestamp,
     },
     UpdateExpression: 'SET upVoteCount = upVoteCount + :upVoteIncrement,downVoteCount = downVoteCount + :downVoteIncrement,updatedAt = :updatedAt',
     ReturnValues: 'ALL_NEW',
@@ -49,7 +51,7 @@ module.exports.update = (event, context, callback) => {
       callback(null, {
         statusCode: error.statusCode || 501,
         headers: { 'Content-Type': 'text/plain' },
-        body: 'Couldn\'t fetch the vote.',
+        body: 'Couldn\'t update the vote.',
       });
       return;
     }

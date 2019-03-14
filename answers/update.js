@@ -20,9 +20,10 @@ module.exports.update = (event, context, callback) => {
   }
 
   const params = {
-    TableName: process.env.USERS_DYNAMODB_TABLE,
+    TableName: process.env.ANSWERS_DYNAMODB_TABLE,
     Key: {
       userId: event.pathParameters.id,
+      questionId: data.questionId,
     },
     ExpressionAttributeNames: {
       '#user_firstName': 'firstName',

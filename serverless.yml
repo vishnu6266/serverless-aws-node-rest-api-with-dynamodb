@@ -181,7 +181,7 @@ functions:
     handler: questions/vote.update
     events:
       - http:
-          path: questions/{id}/{like}
+          path: questions/{id}/vote
           method: put
           cors: true
 
@@ -228,7 +228,7 @@ functions:
     handler: answers/vote.update
     events:
       - http:
-          path: answers/{id}/{like}
+          path: answers/{id}/vote
           method: put
           cors: true
   deleteAnswer:
