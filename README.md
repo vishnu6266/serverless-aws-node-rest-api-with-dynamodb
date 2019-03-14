@@ -136,7 +136,9 @@ layers:
 
 You can create, retrieve, update, or delete todos with the following commands:
 
-#### Create a User
+## User
+
+### Create a User
 
 ```bash
 curl -X POST https://XXXXXXX.execute-api.us-east-1.amazonaws.com/dev/users --data '{ "userName":"john.doe","firstName": "John","lastName":"Doe","active":true }'
@@ -191,6 +193,65 @@ curl -X DELETE https://XXXXXXX.execute-api.us-east-1.amazonaws.com/dev/users/<id
 
 No output
 
+
+## Page
+
+### Create a Page
+
+```bash
+curl -X POST https://mn5spb29p4.execute-api.us-east-1.amazonaws.com/dev/pages --data '{"pageURL":"https://google.com","createdBy": "john.doe"}'
+```
+
+Example Result:
+```bash
+{"pageId":"c63320c0-45fe-11e9-90f8-fb64f3b2b290","pageURL":"https://google.com","createdBy":"john.doe","createdAt":1552529616076,"updatedAt":"1552529616076"}
+```
+
+Debug
+```bash
+serverless invoke --function createPage --data '{"pageURL":"https://google.com","createdBy": "john.doe"}' -l
+```
+#### List all pages
+
+```bash
+curl https://mn5spb29p4.execute-api.us-east-1.amazonaws.com/dev/pages
+```
+
+Example output:
+```bash
+{"pageId":"c63320c0-45fe-11e9-90f8-fb64f3b2b290","pageURL":"https://google.com","createdBy":"john.doe","createdAt":1552529616076,"updatedAt":1552md-lt13608mloecorp:aws-node-rest-api-with-dynamodb snair$ curl https://mn5spb29p4.execute-api.us-east-1.amazonaws.com/dev/pages
+[{"createdAt":1552529616076,"pageURL":"https://google.com","createdBy":"john.doe","updatedAt":1552529616076,"pageId":"c63320c0-45fe-11e9-90f8-fb64f3b2b290"}]
+```
+
+## Annotations
+
+### Create a Annotation on a page
+
+```bash
+curl -X POST https://mn5spb29p4.execute-api.us-east-1.amazonaws.com/dev/annotations --data '{"annotation":"https://google.com","createdBy": "john.doe"}'
+```
+
+Example Result:
+```bash
+{"pageId":"c63320c0-45fe-11e9-90f8-fb64f3b2b290","pageURL":"https://google.com","createdBy":"john.doe","createdAt":1552529616076,"updatedAt":"1552529616076"}
+```
+
+Debug
+```bash
+serverless invoke --function createPage --data '{"pageURL":"https://google.com","createdBy": "john.doe"}' -l
+```
+#### List all annotations on a page
+
+```bash
+curl https://mn5spb29p4.execute-api.us-east-1.amazonaws.com/dev/pages
+```
+
+Example output:
+```bash
+{"pageId":"c63320c0-45fe-11e9-90f8-fb64f3b2b290","pageURL":"https://google.com","createdBy":"john.doe","createdAt":1552529616076,"updatedAt":1552md-lt13608mloecorp:aws-node-rest-api-with-dynamodb snair$ curl https://mn5spb29p4.execute-api.us-east-1.amazonaws.com/dev/pages
+[{"createdAt":1552529616076,"pageURL":"https://google.com","createdBy":"john.doe","updatedAt":1552529616076,"pageId":"c63320c0-45fe-11e9-90f8-fb64f3b2b290"}]
+```
+
 ## Scaling
 
 ### AWS Lambda
@@ -210,3 +271,11 @@ This is can be done via settings in the `serverless.yml`.
 ```
 
 In case you expect a lot of traffic fluctuation we recommend to checkout this guide on how to auto scale DynamoDB [https://aws.amazon.com/blogs/aws/auto-scale-dynamodb-with-dynamic-dynamodb/](https://aws.amazon.com/blogs/aws/auto-scale-dynamodb-with-dynamic-dynamodb/)
+
+
+## Documentation
+
+Please refer following link.
+https://www.dropsource.com/blog/serverless-rest-api/
+
+

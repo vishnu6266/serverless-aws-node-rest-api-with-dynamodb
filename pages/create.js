@@ -8,12 +8,12 @@ const dynamoDb = new AWS.DynamoDB.DocumentClient();
 module.exports.create = (event, context, callback) => {
   const timestamp = new Date().getTime();
   const data = JSON.parse(event.body);
-  if (typeof data.pageURL !== 'string') {
+  if (typeof data.pageURL !== 'string' || typeof data.createdBy !== 'string') {
     console.error('Validation Failed');
     callback(null, {
       statusCode: 400,
       headers: { 'Content-Type': 'text/plain' },
-      body: 'Couldn\'t create the page .',
+      body: 'Validation Failed.Couldn\'t create the page .',
     });
     return;
   }
@@ -23,6 +23,7 @@ module.exports.create = (event, context, callback) => {
     Item: {
       pageId: uuid.v1(),
       pageURL: data.pageURL,
+      createdBy: data.createdBy,
       createdAt: timestamp,
       updatedAt: timestamp,
     },
@@ -36,7 +37,7 @@ module.exports.create = (event, context, callback) => {
       callback(null, {
         statusCode: error.statusCode || 501,
         headers: { 'Content-Type': 'text/plain' },
-        body: 'Couldn\'t create the page.',
+        body: JSON.stringify(error)+'error.Couldn\'t create the page.',
       });
       return;
     }

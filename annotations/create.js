@@ -8,7 +8,7 @@ const dynamoDb = new AWS.DynamoDB.DocumentClient();
 module.exports.create = (event, context, callback) => {
   const timestamp = new Date().getTime();
   const data = JSON.parse(event.body);
-  if (typeof data.pageId !== 'string') {
+  if (typeof data.pageId !== 'string' || typeof data.createdBy !== 'string') {
     console.error('Validation Failed');
     callback(null, {
       statusCode: 400,
@@ -23,6 +23,7 @@ module.exports.create = (event, context, callback) => {
     Item: {
       annotationId: uuid.v1(),
       pageId: data.pageId,
+      createdBy: data.createdBy,
       createdAt: timestamp,
       updatedAt: timestamp,
     },
