@@ -3,11 +3,24 @@
 const AWS = require('aws-sdk'); // eslint-disable-line import/no-extraneous-dependencies
 
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
-const params = {
-  TableName: process.env.COMMENTS_DYNAMODB_TABLE,
-};
+
 
 module.exports.list = (event, context, callback) => {
+
+  let queryAnswerId = "";
+  if (event.queryStringParameters && event.queryStringParameters.answerId) {
+    console.log("Received answerId: " + event.queryStringParameters.answerId);
+    queryAnswerId = event.queryStringParameters.answerId;
+  }
+
+  const params = {
+     TableName: process.env.COMMENTS_DYNAMODB_TABLE,
+     ExpressionAttributeValues: {
+       ':aId': queryAnswerId,
+      },
+      FilterExpression: 'answerId = :aId',
+  };  
+
   // fetch all todos from the database
   dynamoDb.scan(params, (error, result) => {
     // handle potential errors

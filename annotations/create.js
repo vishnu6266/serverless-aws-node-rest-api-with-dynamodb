@@ -13,7 +13,7 @@ module.exports.create = (event, context, callback) => {
     callback(null, {
       statusCode: 400,
       headers: { 'Content-Type': 'text/plain' },
-      body: 'Couldn\'t create the annotation .',
+      body: 'Validation Failed.Couldn\'t create the annotation .',
     });
     return;
   }
@@ -23,6 +23,7 @@ module.exports.create = (event, context, callback) => {
     Item: {
       annotationId: uuid.v1(),
       pageId: data.pageId,
+      section: data.section,
       createdBy: data.createdBy,
       createdAt: timestamp,
       updatedAt: timestamp,
@@ -37,7 +38,7 @@ module.exports.create = (event, context, callback) => {
       callback(null, {
         statusCode: error.statusCode || 501,
         headers: { 'Content-Type': 'text/plain' },
-        body: 'Couldn\'t create the annotation.',
+        body: JSON.stringify(error)+'Couldn\'t create the annotation.',
       });
       return;
     }

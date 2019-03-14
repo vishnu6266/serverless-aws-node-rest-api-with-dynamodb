@@ -3,11 +3,23 @@
 const AWS = require('aws-sdk'); // eslint-disable-line import/no-extraneous-dependencies
 
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
-const params = {
-  TableName: process.env.ANNOTATIONS_DYNAMODB_TABLE,
-};
 
 module.exports.list = (event, context, callback) => {
+
+  let queryPageId = "";
+  if (event.queryStringParameters && event.queryStringParameters.pageId) {
+    console.log("Received pageId: " + event.queryStringParameters.pageId);
+    queryPageId = event.queryStringParameters.pageId;
+  }
+  
+  const params = {
+     TableName: process.env.ANNOTATIONS_DYNAMODB_TABLE,
+     ExpressionAttributeValues: {
+       ':pId': queryPageId,
+      },
+      FilterExpression: 'pageId = :pId',
+  };
+
   // fetch all todos from the database
   dynamoDb.scan(params, (error, result) => {
     // handle potential errors
@@ -16,7 +28,7 @@ module.exports.list = (event, context, callback) => {
       callback(null, {
         statusCode: error.statusCode || 501,
         headers: { 'Content-Type': 'text/plain' },
-        body: 'Couldn\'t fetch the users.',
+        body: 'Couldn\'t fetch the annotations.',
       });
       return;
     }

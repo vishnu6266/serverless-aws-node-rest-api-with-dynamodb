@@ -3,11 +3,26 @@
 const AWS = require('aws-sdk'); // eslint-disable-line import/no-extraneous-dependencies
 
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
-const params = {
-  TableName: process.env.PAGES_DYNAMODB_TABLE,
-};
 
 module.exports.list = (event, context, callback) => {
+
+  console.log("request: " + JSON.stringify(event));
+    
+  let url = "";
+  if (event.queryStringParameters && event.queryStringParameters.pageURL) {
+    console.log("Received pageURL: " + event.queryStringParameters.pageURL);
+    url = event.queryStringParameters.pageURL;
+  }
+  
+  const params = {
+     TableName: process.env.PAGES_DYNAMODB_TABLE,
+     ExpressionAttributeValues: {
+       ':pURL': url,
+      },
+      ProjectionExpression: 'pageId,pageURL,createdBy,createdAt,updatedAt',
+      FilterExpression: 'pageURL = :pURL',
+  };
+
   // fetch all todos from the database
   dynamoDb.scan(params, (error, result) => {
     // handle potential errors

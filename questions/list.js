@@ -3,11 +3,23 @@
 const AWS = require('aws-sdk'); // eslint-disable-line import/no-extraneous-dependencies
 
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
-const params = {
-  TableName: process.env.QUESTIONS_DYNAMODB_TABLE,
-};
 
 module.exports.list = (event, context, callback) => {
+
+  let queryAnnoId = "";
+  if (event.queryStringParameters && event.queryStringParameters.annotationId) {
+    console.log("Received annotationId: " + event.queryStringParameters.annotationId);
+    queryAnnoId = event.queryStringParameters.annotationId;
+  }
+  
+  const params = {
+     TableName: process.env.QUESTIONS_DYNAMODB_TABLE,
+     ExpressionAttributeValues: {
+       ':aId': queryAnnoId,
+      },
+      FilterExpression: 'annotationId = :aId',
+  }; 
+
   // fetch all todos from the database
   dynamoDb.scan(params, (error, result) => {
     // handle potential errors

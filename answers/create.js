@@ -24,6 +24,8 @@ module.exports.create = (event, context, callback) => {
       answerId: uuid.v1(),
       questionId: data.questionId,
       answerText: data.answerText,
+      upVoteCount: 0,
+      downVoteCount: 0,
       createdBy: data.createdBy,
       createdAt: timestamp,
       updatedAt: timestamp,

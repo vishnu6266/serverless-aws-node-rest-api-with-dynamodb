@@ -199,7 +199,7 @@ No output
 ### Create a Page
 
 ```bash
-curl -X POST https://mn5spb29p4.execute-api.us-east-1.amazonaws.com/dev/pages --data '{"pageURL":"https://google.com","createdBy": "john.doe"}'
+curl -X POST https://XXXXXXX.execute-api.us-east-1.amazonaws.com/dev/pages --data '{"pageURL":"https://google.com","createdBy": "john.doe"}'
 ```
 
 Example Result:
@@ -214,43 +214,132 @@ serverless invoke --function createPage --data '{"pageURL":"https://google.com",
 #### List all pages
 
 ```bash
-curl https://mn5spb29p4.execute-api.us-east-1.amazonaws.com/dev/pages
+curl https://XXXXXXX.execute-api.us-east-1.amazonaws.com/dev/pages?pageURL=[query url]
 ```
 
 Example output:
 ```bash
-{"pageId":"c63320c0-45fe-11e9-90f8-fb64f3b2b290","pageURL":"https://google.com","createdBy":"john.doe","createdAt":1552529616076,"updatedAt":1552md-lt13608mloecorp:aws-node-rest-api-with-dynamodb snair$ curl https://mn5spb29p4.execute-api.us-east-1.amazonaws.com/dev/pages
+{"pageId":"c63320c0-45fe-11e9-90f8-fb64f3b2b290","pageURL":"https://google.com","createdBy":"john.doe","createdAt":1552529616076,"updatedAt":1552md-lt13608mloecorp:aws-node-rest-api-with-dynamodb snair$ curl https://XXXXXXX.execute-api.us-east-1.amazonaws.com/dev/pages
 [{"createdAt":1552529616076,"pageURL":"https://google.com","createdBy":"john.doe","updatedAt":1552529616076,"pageId":"c63320c0-45fe-11e9-90f8-fb64f3b2b290"}]
 ```
 
 ## Annotations
 
-### Create a Annotation on a page
+### Create an annotation on a page
 
 ```bash
-curl -X POST https://mn5spb29p4.execute-api.us-east-1.amazonaws.com/dev/annotations --data '{"annotation":"https://google.com","createdBy": "john.doe"}'
+curl -X POST https://XXXXXXX.execute-api.us-east-1.amazonaws.com/dev/annotations --data '{"pageId":"c63320c0-45fe-11e9-90f8-fb64f3b2b290","section":"mycourse","createdBy": "john.doe"}'
 ```
 
 Example Result:
 ```bash
-{"pageId":"c63320c0-45fe-11e9-90f8-fb64f3b2b290","pageURL":"https://google.com","createdBy":"john.doe","createdAt":1552529616076,"updatedAt":"1552529616076"}
+{"annotationId":"5e89d040-460d-11e9-9d9a-f7ecfc95429c","pageId":"c63320c0-45fe-11e9-90f8-fb64f3b2b290","section":"mycourse","createdBy":"john.doe","createdAt":1552535884612,"updatedAt":1552535884612}
 ```
 
-Debug
-```bash
-serverless invoke --function createPage --data '{"pageURL":"https://google.com","createdBy": "john.doe"}' -l
 ```
 #### List all annotations on a page
 
 ```bash
-curl https://mn5spb29p4.execute-api.us-east-1.amazonaws.com/dev/pages
+curl https://XXXXXXX.execute-api.us-east-1.amazonaws.com/dev/annotations?pageId=[page id]
 ```
 
 Example output:
 ```bash
-{"pageId":"c63320c0-45fe-11e9-90f8-fb64f3b2b290","pageURL":"https://google.com","createdBy":"john.doe","createdAt":1552529616076,"updatedAt":1552md-lt13608mloecorp:aws-node-rest-api-with-dynamodb snair$ curl https://mn5spb29p4.execute-api.us-east-1.amazonaws.com/dev/pages
-[{"createdAt":1552529616076,"pageURL":"https://google.com","createdBy":"john.doe","updatedAt":1552529616076,"pageId":"c63320c0-45fe-11e9-90f8-fb64f3b2b290"}]
+[{"createdAt":1552535884612,"section":"mycourse","createdBy":"john.doe","updatedAt":1552535884612,"annotationId":"5e89d040-460d-11e9-9d9a-f7ecfc95429c","pageId":"c63320c0-45fe-11e9-90f8-fb64f3b2b290"}]
 ```
+
+## Questions
+
+### Create a question on an annotation
+
+```bash
+curl -X POST https://XXXXXXXXXX.execute-api.us-east-1.amazonaws.com/dev/questions --data '{"annotationId":"5e89d040-460d-11e9-9d9a-f7ecfc95429c","questionText":"What is this section about?","createdBy": "john.doe"}'
+```
+
+Example Result:
+```bash
+{"questionId":"61ca02f0-4614-11e9-88a4-dfe4685122e8","annotationId":"5e89d040-460d-11e9-9d9a-f7ecfc95429c","questionText":"What is this section about?","upVoteCount":0,"downVoteCount":0,"createdBy":"john.doe","createdAt":1552538896543,"updatedAt":1552538896543}
+```
+### Vote a question 
+
+If liked
+
+curl -X PUT https://XXXXXXXXXX.execute-api.us-east-1.amazonaws.com/dev/questions/<id>/true
+
+If disliked
+
+curl -X PUT https://XXXXXXXXXX.execute-api.us-east-1.amazonaws.com/dev/questions/<id>/false
+
+
+#### List all quesions on an annotation
+
+```bash
+curl https://XXXXXXXXXX.execute-api.us-east-1.amazonaws.com/dev/questions?annotationId=<annotation id>
+```
+
+Example output:
+```bash
+[{"upVoteCount":0,"downVoteCount":0,"questionText":"What is this section about?","questionId":"61ca02f0-4614-11e9-88a4-dfe4685122e8","updatedAt":1552538896543,"createdAt":1552538896543,"createdBy":"john.doe","annotationId":"5e89d040-460d-11e9-9d9a-f7ecfc95429c"}]
+```
+
+
+### Create an answer for a question
+
+```bash
+curl -X POST https://XXXXXXXXXX.execute-api.us-east-1.amazonaws.com/dev/answers --data '{"questionId":"61ca02f0-4614-11e9-88a4-dfe4685122e8","answerText":"This is my answer","createdBy": "john.doe"}'
+```
+
+Example Result:
+```bash
+{"answerId":"644c7900-461d-11e9-aa4d-7d2ab4d5a091","questionId":"61ca02f0-4614-11e9-88a4-dfe4685122e8","answerText":"This is my answer","upVoteCount":0,"downVoteCount":0,"createdBy":"john.doe","createdAt":1552542766224,"updatedAt":1552542766224}
+```
+### Vote a answer 
+
+If liked
+
+curl -X PUT https://XXXXXXXXXX.execute-api.us-east-1.amazonaws.com/dev/answers/<id>/true
+
+If Disliked
+
+curl -X PUT https://XXXXXXXXXX.execute-api.us-east-1.amazonaws.com/dev/answers/<id>/false
+
+
+#### List all answers for a question
+
+```bash
+curl https://XXXXXXXXXX.execute-api.us-east-1.amazonaws.com/dev/answers?questionId=<question id>
+```
+
+Example output:
+```bash
+[{"upVoteCount":0,"downVoteCount":0,"questionId":"61ca02f0-4614-11e9-88a4-dfe4685122e8","updatedAt":1552542766224,"answerId":"644c7900-461d-11e9-aa4d-7d2ab4d5a091","answerText":"This is my answer","createdAt":1552542766224,"createdBy":"john.doe"}]
+```
+
+### Create an comment on an answer
+
+```bash
+curl -X POST https://XXXXXXXXXX.execute-api.us-east-1.amazonaws.com/dev/comments --data '{"answerId":"61ca02f0-4614-11e9-88a4-dfe4685122e8","commentText":"This is my comment","createdBy": "john.doe"}'
+```
+
+Example Result:
+```bash
+{"commentId":"3dfd9430-461f-11e9-9ece-b7caabc48d37","answerId":"61ca02f0-4614-11e9-88a4-dfe4685122e8","commentText":"This is my comment","createdBy":"john.doe","createdAt":1552543560947,"updatedAt":1552543560947}
+```
+
+#### List all comments for an answer
+
+```bash
+curl https://XXXXXXXXXX.execute-api.us-east-1.amazonaws.com/dev/comments?answerId=<answer id>
+```
+
+Example output:
+```bash
+[{"commentText":"This is my comment","createdAt":1552543560947,"commentId":"3dfd9430-461f-11e9-9ece-b7caabc48d37","createdBy":"john.doe","updatedAt":1552543560947,"answerId":"61ca02f0-4614-11e9-88a4-dfe4685122e8"}]
+```
+
+
+
+
 
 ## Scaling
 

@@ -2,8 +2,6 @@ service: HMCF-WebAnno
 
 frameworkVersion: ">=1.1.0 <2.0.0"
 
-plugins:
-  - serverless-aws-documentation
 
 provider:
   name: aws
@@ -179,6 +177,13 @@ functions:
           path: questions/{id}
           method: put
           cors: true
+  voteQuestion:
+    handler: questions/vote.update
+    events:
+      - http:
+          path: questions/{id}/{like}
+          method: put
+          cors: true
 
   deleteQuestion:
     handler: questions/delete.delete
@@ -219,7 +224,13 @@ functions:
           path: answers/{id}
           method: put
           cors: true
-
+  voteAnswer:
+    handler: answers/vote.update
+    events:
+      - http:
+          path: answers/{id}/{like}
+          method: put
+          cors: true
   deleteAnswer:
     handler: answers/delete.delete
     events:

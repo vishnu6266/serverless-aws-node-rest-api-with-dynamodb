@@ -9,29 +9,35 @@ module.exports.update = (event, context, callback) => {
   const data = JSON.parse(event.body);
 
   // validation
-  if (typeof data.questionText !== 'string') {
+  if (typeof event.pathParameters.like !== 'string') {
     console.error('Validation Failed');
     callback(null, {
       statusCode: 400,
       headers: { 'Content-Type': 'text/plain' },
-      body: 'Couldn\'t update the question.',
+      body: 'Validation Failed.Couldn\'t update the vote.',
     });
     return;
   }
 
+  let upVoteIncrement = 0;
+  let downVoteIncrement = 0;
+    
+  if (event.pathParameters.like) {
+    upVoteIncrement = 1;
+  } else {
+    downVoteIncrement = 1;
+  }
+
   const params = {
-    TableName: process.env.QUESTIONS_DYNAMODB_TABLE,
+    TableName: process.env.ANSWERS_DYNAMODB_TABLE,
     Key: {
       questionId: event.pathParameters.id,
     },
-    ExpressionAttributeNames: {
-      '#q_questionText': 'questionText',
-    },
     ExpressionAttributeValues: {
-      ':questionText': data.questionText,
-      ':updatedAt': timestamp,
+      ':upVoteIncrement': upVoteIncrement,
+      ':downVoteIncrement': downVoteIncrement,
     },
-    UpdateExpression: 'SET #q_questionText = :questionText,updatedAt = :updatedAt',
+    UpdateExpression: 'SET upVoteCount = upVoteCount + :upVoteIncrement,downVoteCount = downVoteCount + :downVoteIncrement,updatedAt = :updatedAt',
     ReturnValues: 'ALL_NEW',
   };
 
@@ -43,7 +49,7 @@ module.exports.update = (event, context, callback) => {
       callback(null, {
         statusCode: error.statusCode || 501,
         headers: { 'Content-Type': 'text/plain' },
-        body: 'Couldn\'t fetch the question.',
+        body: 'Couldn\'t fetch the vote.',
       });
       return;
     }
